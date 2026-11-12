@@ -1,0 +1,6 @@
+* text=auto eol=lf
+# Dataset and historical evidence hashes bind original bytes on every platform.
+data/*.jsonl -text whitespace=cr-at-eol,-blank-at-eof
+evidence/** -text whitespace=cr-at-eol,-blank-at-eof
+*.jpg -text
+*.png -text

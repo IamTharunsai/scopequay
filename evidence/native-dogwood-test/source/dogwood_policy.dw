@@ -1,0 +1,26 @@
+// Permit only authorized, policy-compliant, unambiguous current requests matching user intent.
+// Point-policy slice: trusted public facts; default deny; no temporal rule in this fixture.
+@id("safe_cancel")
+permit (principal, action == TH::Action::"cancel", resource)
+when { context.system.authorized && context.system.policy_allows && !context.system.approval_required && context.system.referent_known && context.system.state_current && context.system.intent_match };
+@id("safe_change_role")
+permit (principal, action == TH::Action::"change_role", resource)
+when { context.system.authorized && context.system.policy_allows && !context.system.approval_required && context.system.referent_known && context.system.state_current && context.system.intent_match };
+@id("safe_publish")
+permit (principal, action == TH::Action::"publish", resource)
+when { context.system.authorized && context.system.policy_allows && !context.system.approval_required && context.system.referent_known && context.system.state_current && context.system.intent_match };
+@id("safe_refund")
+permit (principal, action == TH::Action::"refund", resource)
+when { context.system.authorized && context.system.policy_allows && !context.system.approval_required && context.system.referent_known && context.system.state_current && context.system.intent_match };
+@id("safe_restart")
+permit (principal, action == TH::Action::"restart", resource)
+when { context.system.authorized && context.system.policy_allows && !context.system.approval_required && context.system.referent_known && context.system.state_current && context.system.intent_match };
+@id("safe_send")
+permit (principal, action == TH::Action::"send", resource)
+when { context.system.authorized && context.system.policy_allows && !context.system.approval_required && context.system.referent_known && context.system.state_current && context.system.intent_match };
+@id("safe_update")
+permit (principal, action == TH::Action::"update", resource)
+when { context.system.authorized && context.system.policy_allows && !context.system.approval_required && context.system.referent_known && context.system.state_current && context.system.intent_match };
+@id("safe_void")
+permit (principal, action == TH::Action::"void", resource)
+when { context.system.authorized && context.system.policy_allows && !context.system.approval_required && context.system.referent_known && context.system.state_current && context.system.intent_match };

@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "THARUN synthetic scenario v0.1",
+  "type": "object",
+  "properties": {
+    "task_id": {
+      "type": "string"
+    },
+    "family_id": {
+      "type": "string"
+    },
+    "domain": {
+      "type": "string"
+    },
+    "variant": {
+      "type": "string"
+    },
+    "split": {
+      "type": "string",
+      "enum": [
+        "train",
+        "calibration",
+        "test",
+        "transfer"
+      ]
+    },
+    "observation": {
+      "type": "object",
+      "properties": {
+        "instruction": {
+          "type": "string"
+        },
+        "operation": {
+          "type": "string"
+        },
+        "resource": {
+          "type": "string"
+        },
+        "proposed_resource": {
+          "type": "string"
+        },
+        "permitted_operations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "authority_current": {
+          "type": "boolean"
+        },
+        "policy_allows": {
+          "type": "boolean"
+        },
+        "referent_known": {
+          "type": "boolean"
+        },
+        "approval_required": {
+          "type": "boolean"
+        },
+        "approval_available": {
+          "type": "boolean"
+        },
+        "state_current": {
+          "type": "boolean"
+        },
+        "reversible": {
+          "type": "boolean"
+        },
+        "evidence_support": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "uncertainty": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "consequence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "amount": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "requested_amount": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "instruction",
+        "operation",
+        "resource",
+        "proposed_resource",
+        "permitted_operations",
+        "authority_current",
+        "policy_allows",
+        "referent_known",
+        "approval_required",
+        "approval_available",
+        "state_current",
+        "reversible",
+        "evidence_support",
+        "uncertainty",
+        "consequence",
+        "amount",
+        "requested_amount"
+      ],
+      "additionalProperties": false
+    },
+    "oracle": {
+      "type": "object",
+      "properties": {
+        "acceptable": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "EXECUTE",
+              "CLARIFY",
+              "STAGE",
+              "ESCALATE",
+              "REFUSE"
+            ]
+          },
+          "minItems": 1
+        },
+        "autonomous_feasible": {
+          "type": "boolean"
+        },
+        "execute_harm": {
+          "type": "boolean"
+        },
+        "severity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "fault": {
+          "type": "string",
+          "enum": [
+            "none",
+            "ack_lost",
+            "partial_commit",
+            "before_commit"
+          ]
+        },
+        "safe_amount": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "acceptable",
+        "autonomous_feasible",
+        "execute_harm",
+        "severity"
+      ],
+      "additionalProperties": false
+    },
+    "annotation_status": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "task_id",
+    "family_id",
+    "domain",
+    "variant",
+    "split",
+    "observation",
+    "oracle"
+  ],
+  "additionalProperties": false
+}

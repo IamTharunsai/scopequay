@@ -1,0 +1,32 @@
+apiVersion: governance.toolkit/v1
+version: "1.0"
+name: tharun-synthetic-observable-facts
+agents: ["tharun-pilot"]
+default_action: allow
+rules:
+  - name: policy_denied
+    condition: "facts.policy == 'deny'"
+    action: deny
+    priority: 100
+  - name: intent_mismatch
+    condition: "facts.intent == 'mismatch'"
+    action: deny
+    priority: 95
+  - name: authority_missing
+    condition: "facts.authority == 'missing'"
+    action: require_approval
+    approvers: ["synthetic-authorized-reviewer"]
+    priority: 90
+  - name: approval_required
+    condition: "facts.approval == 'required'"
+    action: require_approval
+    approvers: ["synthetic-authorized-reviewer"]
+    priority: 85
+  - name: missing_referent
+    condition: "facts.referent == 'unknown'"
+    action: deny
+    priority: 80
+  - name: stale_state
+    condition: "facts.state == 'stale'"
+    action: deny
+    priority: 75

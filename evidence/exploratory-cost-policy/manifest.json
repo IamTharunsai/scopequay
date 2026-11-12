@@ -1,0 +1,31 @@
+{
+  "status": "completed",
+  "records": 448,
+  "final_record_hash": "57cd99bd51c8531b760eacfb2182be6b5b1284e3f021184fb37ac39baf2f59f5",
+  "run_id": "394da65e-25b8-413b-b303-5ebd34e07b8e",
+  "dataset_sha256": "965e979b5d0de29aa52946180bf70339ab95d50c51acd07f579de4a612c24fb9",
+  "code_hashes": {
+    "__init__.py": "99acf2e64ae28d511bc2113cb61dfd0df29748171c7dea4329fbf789d24b494d",
+    "__main__.py": "19f07de3d1765a6803d4332ab1e67346381236f7769f47640e73849922394790",
+    "agent.py": "66732432fbc2e4247a54985f439a97c892280deffbb9bf5c4fca31fc31b6e439",
+    "agt_policy.yaml": "b6dd07a7178042edfd86662e5bd85a305667434943bdfd37baba346326f457a9",
+    "annotations.py": "27f1d3ebf21583f10a7a3a9fe5065b506fa848c218ee32d362d94b9e14d2a2e2",
+    "cli.py": "abe5776470a23e27c956ee2c1165f98c78af6b99a1d82729149fc7039965c62e",
+    "controllers.py": "59410ad34d13048d5eb04c6533a58e086814da2e082aa6bc28effa44d5d56841",
+    "cost_policy.py": "2b33bb5fd1472cb0dc5e297824412a7366bf2e0aa888bac21242eb94d63b10ff",
+    "data.py": "0872dbd06aff333a2c439697cab781d6ff2680f6d593b17355ab0dbb106da479",
+    "experiment.py": "63e9165eab12230b0e9fd4aa14d5c6d4eff8d3fdaa15098cfa1996e1b703de0c",
+    "local_models.py": "00559958e626432c57c153b62c4a40a436ab5c67712de9e220b31b0d0549a31e",
+    "metrics.py": "3198e77ea2846da72233b86536e7c85ae8d854b1ba8e3159819f1c861e174dfa",
+    "report.py": "b4237ae85ddb007c8ea15c7afb08048b4dbab79367cd93e177959e935f274679",
+    "sandbox.py": "7db963371356a12d2501b7cd805dffeff7f956beab3322699e74099eaebcb413",
+    "schema.py": "0b3316ce6aff6fb20923219fc930cba7ae027af315998071bf595e854db1c6e9",
+    "third_party.py": "d4cf4b7509d5647ad7b5f7391213b27716245e6ce5c849e485628e5264998b14"
+  },
+  "split": "test",
+  "created_at": "2026-10-24T00:11:50.907176+00:00",
+  "experiment_type": "synthetic_fixed_proposal",
+  "annotation_status": "synthetic_unreviewed",
+  "paid_api_spend_usd": 0,
+  "export_note": "Redacted metadata copy; outcome bytes unchanged. Machine paths/configuration omitted. Original manifest hash is in provenance."
+}

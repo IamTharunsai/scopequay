@@ -1,0 +1,11 @@
+claim_id,claim,status,evidence,remaining_validation
+C01,40 synthetic families and 320 points,verified implementation,data/pilot_v0_2.jsonl,Independent human annotation
+C02,Family-disjoint train calibration test and transfer,verified implementation,tharun/data.py and tests/test_research.py,Realistic environment validation
+C03,Threshold controller improves the autonomy risk tradeoff,hypothesis not supported by current pilot,evidence/repaired-fixtures-agt-comparison/summary.json,New sealed confirmatory study
+C04,Cost candidate at alpha 0.05 meets heldout target,contradicted in current pilot,evidence/exploratory-cost-policy/summary.json,Improve method without tuning on test
+C05,Native toolkit policies were executed,verified narrow slices,evidence/native-dogwood-test and docs/AGT_ADAPTER.md,Full runtime evaluation
+C06,Dashboard approvals are benchmark results,false do not claim,scopequay/workflow.py,Separate future human study
+C07,Zero observed harm implies deployment safety,false do not claim,paper/scopequay.md,Stated assumptions and suitable risk bounds
+C08,The method is scientifically novel,unverified,paper/scopequay.md,Full-text closest-prior-work review
+C09,ScopeQuay is a production authorization service,false do not claim,docs/LOCAL_AND_GITHUB.md,Production architecture and validation
+C10,All paper claims are 100 percent accurate,not a defensible guarantee,paper/scopequay.md,Traceable evidence and independent review

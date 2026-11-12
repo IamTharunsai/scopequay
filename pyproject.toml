@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "scopequay"
+version = "0.2.0"
+description = "Experimental risk-calibrated selective autonomy research harness"
+requires-python = ">=3.12"
+license = {text = "Apache-2.0"}
+dependencies = []
+
+[project.optional-dependencies]
+toolkit = ["agent-governance-toolkit-core==5.0.0"]
+dev = ["ruff==0.17.2"]
+
+[project.scripts]
+tharun = "tharun.cli:main"
+scopequay = "scopequay.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["tharun*", "scopequay*"]
+
+[tool.setuptools.package-data]
+tharun = ["*.yaml", "*.dw", "*.cedarschema"]
+scopequay = ["web/*.html", "web/*.css", "web/*.js"]

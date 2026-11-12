@@ -1,0 +1,19 @@
+name: local-core-tests
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ['3.12', '3.13']
+    steps:
+      # Official usage: https://github.com/actions/checkout
+      - uses: actions/checkout@v7
+      # Official usage: https://github.com/actions/setup-python
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m unittest discover -s tests -v

@@ -1,0 +1,30 @@
+{
+  "status": "completed",
+  "records": 336,
+  "final_record_hash": "b23aeb041110260dd1f6913895e99bb7e2d3f16d59c7e7e511d203780f2a067f",
+  "run_id": "711b33c6-1d3c-4630-b93b-d0e9f7c796ad",
+  "dataset_sha256": "965e979b5d0de29aa52946180bf70339ab95d50c51acd07f579de4a612c24fb9",
+  "code_hashes": {
+    "__init__.py": "99acf2e64ae28d511bc2113cb61dfd0df29748171c7dea4329fbf789d24b494d",
+    "__main__.py": "19f07de3d1765a6803d4332ab1e67346381236f7769f47640e73849922394790",
+    "agent.py": "e5898227d3cbc98ebb43caa8cb37cfd2765e263769c7ae12ab7906823849ddb6",
+    "agt_policy.yaml": "b6dd07a7178042edfd86662e5bd85a305667434943bdfd37baba346326f457a9",
+    "annotations.py": "27f1d3ebf21583f10a7a3a9fe5065b506fa848c218ee32d362d94b9e14d2a2e2",
+    "cli.py": "4090ea433a4e98324585a60a26954d79d509498d25dab880584ecd697d9044f6",
+    "controllers.py": "2f5b22dd8ac6e567ed9b1ab46c28f233e5742cc391a53f4294a53632e4c1a6b8",
+    "data.py": "0872dbd06aff333a2c439697cab781d6ff2680f6d593b17355ab0dbb106da479",
+    "experiment.py": "98bc625af5a33112daa56702a985363a13363d5dd2230fcaadaa6b9037684bc1",
+    "local_models.py": "00559958e626432c57c153b62c4a40a436ab5c67712de9e220b31b0d0549a31e",
+    "metrics.py": "441334979d085ddee213afae3082e473c3d8b34b355e66e96d983b25ae407919",
+    "report.py": "eff4e0955c94b6b5a6e3cd250e46cfb90295ac4c7b49b75a9994e8a090f94089",
+    "sandbox.py": "7db963371356a12d2501b7cd805dffeff7f956beab3322699e74099eaebcb413",
+    "schema.py": "0b3316ce6aff6fb20923219fc930cba7ae027af315998071bf595e854db1c6e9",
+    "third_party.py": "d4cf4b7509d5647ad7b5f7391213b27716245e6ce5c849e485628e5264998b14"
+  },
+  "split": "test",
+  "created_at": "2026-10-23T19:13:43.419480+00:00",
+  "experiment_type": "synthetic_fixed_proposal",
+  "annotation_status": "synthetic_unreviewed",
+  "paid_api_spend_usd": 0,
+  "export_note": "Redacted metadata copy; outcome bytes unchanged. Machine paths/configuration omitted. Original manifest hash is in provenance."
+}

@@ -1,0 +1,15 @@
+namespace TH {
+  entity Agent;
+  entity Gateway;
+  type ToolInput = { resource: String, amount: Long };
+  type ToolOutput = { };
+  type SystemContext = { authorized: Bool, policy_allows: Bool, approval_required: Bool, referent_known: Bool, state_current: Bool, intent_match: Bool };
+  action "cancel" appliesTo { principal: [Agent], resource: [Gateway], context: { input: ToolInput, output?: ToolOutput, system: SystemContext } };
+  action "change_role" appliesTo { principal: [Agent], resource: [Gateway], context: { input: ToolInput, output?: ToolOutput, system: SystemContext } };
+  action "publish" appliesTo { principal: [Agent], resource: [Gateway], context: { input: ToolInput, output?: ToolOutput, system: SystemContext } };
+  action "refund" appliesTo { principal: [Agent], resource: [Gateway], context: { input: ToolInput, output?: ToolOutput, system: SystemContext } };
+  action "restart" appliesTo { principal: [Agent], resource: [Gateway], context: { input: ToolInput, output?: ToolOutput, system: SystemContext } };
+  action "send" appliesTo { principal: [Agent], resource: [Gateway], context: { input: ToolInput, output?: ToolOutput, system: SystemContext } };
+  action "update" appliesTo { principal: [Agent], resource: [Gateway], context: { input: ToolInput, output?: ToolOutput, system: SystemContext } };
+  action "void" appliesTo { principal: [Agent], resource: [Gateway], context: { input: ToolInput, output?: ToolOutput, system: SystemContext } };
+}

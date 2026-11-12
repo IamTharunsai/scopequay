@@ -28,3 +28,5 @@ verification. This is not a claim of a full accessibility or security audit.
 Screenshot provenance: docs/images/approval-dashboard.jpg is a browser capture of
 our running local demo after explicit simulated approval/execution on 12 November
 2026. Its example content is illustrative; no external art or stock asset is used.
+
+Brand assets updated 12 November 2026: the user supplied the dark and light PNG wordmarks. Both originals are copied byte-for-byte into the application and public guide, with aspect ratios preserved. The dark wordmark appears in the sidebar; the light wordmark heads the guide; the README chooses by color scheme. No generated replacement or image editing was performed.

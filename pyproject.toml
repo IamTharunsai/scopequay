@@ -23,4 +23,4 @@ include = ["tharun*", "scopequay*"]
 
 [tool.setuptools.package-data]
 tharun = ["*.yaml", "*.dw", "*.cedarschema"]
-scopequay = ["web/*.html", "web/*.css", "web/*.js"]
+scopequay = ["web/*.html", "web/*.css", "web/*.js", "web/*.png"]

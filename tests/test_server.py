@@ -32,7 +32,7 @@ class LocalServerTests(unittest.TestCase):
         return status, value, response_headers
 
     def test_local_approval_api_and_static_files(self):
-        for path in ["/", "/style.css", "/app.js"]:
+        for path in ["/", "/style.css", "/app.js", "/logo-dark.png", "/logo-light.png"]:
             status, body, headers = self.request("GET", path)
             self.assertEqual(status, 200)
             self.assertTrue(body)

@@ -14,6 +14,8 @@ STATIC = {
     "/": ("index.html", "text/html; charset=utf-8"),
     "/app.js": ("app.js", "text/javascript; charset=utf-8"),
     "/style.css": ("style.css", "text/css; charset=utf-8"),
+    "/logo-dark.png": ("logo-dark.png", "image/png"),
+    "/logo-light.png": ("logo-light.png", "image/png"),
 }
 
 

@@ -1,4 +1,7 @@
-# ScopeQuay
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/logo-dark.png">
+  <img src="docs/images/logo-light.png" width="480" alt="ScopeQuay">
+</picture>
 
 **Control before action.** A local approval dashboard and research engine for
 risk-calibrated selective autonomy in tool-using LLM agents.

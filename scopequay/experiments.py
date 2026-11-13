@@ -80,6 +80,7 @@ class ExperimentService:
             "max_calls",
             "max_seconds",
             "split",
+            "recovery",
         }:
             raise ValueError(
                 "Unknown experiment options; paths, prompts and provider URLs cannot be supplied"
@@ -94,6 +95,7 @@ class ExperimentService:
             "max_calls": 32,
             "max_seconds": 180,
             "split": "test",
+            "recovery": "verify",
             **payload,
         }
         if config["provider"] != "local_ollama":
@@ -103,10 +105,17 @@ class ExperimentService:
         if config["mode"] not in {"fixed_proposal", "agent"} or config["split"] not in {
             "test",
             "transfer",
+            "evaluation",
         }:
             raise ValueError("Invalid mode or split")
+        if config["recovery"] not in {"verify", "naive", "idempotent", "halt"}:
+            raise ValueError("Invalid recovery mode")
+        if config["mode"] == "agent" and config["recovery"] != "verify":
+            raise ValueError(
+                "Agent comparisons currently use the common effect-history guard"
+            )
         for name, low, high in [
-            ("limit", 1, 8),
+            ("limit", 1, 8 if config["mode"] == "agent" else 152),
             ("max_steps", 1, 4),
             ("max_calls", 1, 64),
             ("max_seconds", 1, 600),
@@ -187,9 +196,24 @@ class ExperimentService:
             config = job["config"]
             rows = load_dataset(self.dataset)
             selected = select_balanced(
-                [r for r in rows if r.split == config["split"]], config["limit"]
+                [
+                    r
+                    for r in rows
+                    if r.split == config["split"]
+                    or (
+                        config["split"] == "evaluation"
+                        and r.split in {"test", "transfer"}
+                    )
+                ],
+                config["limit"],
             )
             artifact = None
+            (self.root / job_id / "contexts.json").write_text(
+                json.dumps(
+                    {r.task_id: r.observation.public() for r in selected}, indent=2
+                ),
+                encoding="utf-8",
+            )
             if "tharun_calibrated" in config["systems"]:
                 artifact = fit(
                     [r for r in rows if r.split == "train"],
@@ -213,7 +237,7 @@ class ExperimentService:
                 "experiment_job_id": job_id,
                 "recovery_mode": "effect_history_guard"
                 if config["mode"] == "agent"
-                else "verify",
+                else config["recovery"],
             }
             agent = None
             if config["mode"] == "agent":
@@ -246,7 +270,11 @@ class ExperimentService:
                 job["inference_calls"] = agent.calls
             else:
                 result = evaluate(
-                    selected, gates, writer, max_seconds=config["max_seconds"]
+                    selected,
+                    gates,
+                    writer,
+                    recovery=config["recovery"],
+                    max_seconds=config["max_seconds"],
                 )
                 job["inference_calls"] = 0
             if result:
@@ -283,5 +311,17 @@ class ExperimentService:
         return {
             "job": job,
             "outcomes": rows,
+            "scenario_context": json.loads(
+                (self.root / job_id / "contexts.json").read_text(encoding="utf-8")
+            )
+            if (self.root / job_id / "contexts.json").exists()
+            else {},
+            "slices": {
+                field: {
+                    value: group_summary([r for r in rows if r[field] == value])
+                    for value in sorted({r[field] for r in rows})
+                }
+                for field in ["domain", "variant", "split"]
+            },
             "notice": "Synthetic unreviewed evaluation; no deployment safety guarantee. Cached model responses are not fresh independent inference.",
         }

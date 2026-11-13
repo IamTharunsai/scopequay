@@ -1,9 +1,8 @@
 # Experiment backend
 
 ScopeQuay now has a backend API over its research runner. This is a local,
-single-user experiment service, not a production cloud service. The existing
-approval dashboard remains an illustrative workflow; it does not automatically
-start these experiments or become an LLM comparison screen.
+single-user experiment service, not a production cloud service. The dashboard now starts these experiments and displays their outcomes. The
+approval demonstration remains separate from experiment records.
 
 Start the updated application with `python -m scopequay serve`. A server that was
 already running before this change needs a restart. From an installed wheel,
@@ -14,6 +13,9 @@ set `--dataset` to the repository's data/pilot_v0_2.jsonl path if needed.
 | Endpoint | Behavior |
 |---|---|
 | GET /api/state | Existing demo state and per-start CSRF token |
+| POST /api/review | Assess supplied action facts; execute no tool |
+| GET /api/capabilities | Implemented scenario coverage and limits |
+| GET /api/evidence | Recorded pilot aggregates from the source checkout |
 | GET /api/models | Local Ollama inventory; no inference; 503 if unavailable |
 | POST /api/experiments | Validate options and create one bounded experiment job |
 | GET /api/experiments | List persisted job state |
@@ -43,7 +45,8 @@ is not fitted. Calibration/report preparation can be slower than fixed-gate
 evaluation. The local size cap is 3.5 GB per installed model for this laptop pilot.
 Cloud aliases and missing model tags are rejected rather than downloaded.
 
-Limits: 1–8 scenarios, 1–3 distinct supported controllers, at most 4 agent steps,
+Limits: 1–152 supplied-action cases or 1–8 agent cases, 1–3 distinct supported
+controllers, at most 4 agent steps,
 64 worst-case model calls and a 1–600 second evaluation-loop budget. The current
 supported controllers are direct, static_policy, tharun_fixed and
 tharun_calibrated. Every agent system uses the same effect-history recovery guard.
@@ -76,3 +79,5 @@ provider's tool-call format, preserve exact model/version and sampling settings,
 enforce independent spending limits, record usage, distinguish transport errors
 from model actions, and pass the same sandbox contract. It also needs explicit
 authorization for paid runs. An API key alone does not establish fair comparison.
+
+The evaluation suite combines test and transfer points without fitting on either; result slices retain the split distinction. Supplied-action runs can select verify, naive, idempotent or halt recovery. Agent comparisons retain the common effect-history guard.

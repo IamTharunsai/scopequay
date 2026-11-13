@@ -45,7 +45,7 @@ class ExperimentBackendTests(unittest.TestCase):
             {"dataset": "private.csv"},
             {"model": "llama3.2:3b"},
             {"limit": True},
-            {"limit": 9},
+            {"limit": 153},
             {"max_seconds": 601},
             {"systems": ["direct", "direct"]},
             {"systems": ["shell"]},

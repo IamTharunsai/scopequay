@@ -1,0 +1,7 @@
+{
+  "retrieved": "2026-11-13",
+  "url": "https://developers.openai.com/api/docs/guides/agents/guardrails-approvals",
+  "kind": "primary product source",
+  "verified_fact_summary": "Official documentation describes guardrails and tool-call approval interruptions.",
+  "capture_note": "Audited fact extract, not a complete page scrape. No paid SEO or review API was used."
+}

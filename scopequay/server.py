@@ -14,6 +14,7 @@ WEB = Path(__file__).with_name("web")
 STATIC = {
     "/": ("index.html", "text/html; charset=utf-8"),
     "/app.js": ("app.js", "text/javascript; charset=utf-8"),
+    "/lab.js": ("lab.js", "text/javascript; charset=utf-8"),
     "/style.css": ("style.css", "text/css; charset=utf-8"),
     "/logo-dark.png": ("logo-dark.png", "image/png"),
     "/logo-light.png": ("logo-light.png", "image/png"),
@@ -29,7 +30,7 @@ def make_server(port=8765, database="local-data/approvals.sqlite3", dataset=None
     token = secrets.token_urlsafe(32)
 
     class Handler(BaseHTTPRequestHandler):
-        server_version = "ScopeQuayLocal/0.3"
+        server_version = "ScopeQuayLocal/0.4-alpha"
 
         def reply(self, status, body, content_type="application/json; charset=utf-8"):
             raw = body if isinstance(body, bytes) else json.dumps(body).encode()
@@ -71,6 +72,36 @@ def make_server(port=8765, database="local-data/approvals.sqlite3", dataset=None
                 )
             if path == "/api/experiments":
                 return self.reply(200, {"experiments": experiments.list()})
+            if path == "/api/capabilities":
+                from tharun.data import load_dataset
+
+                rows = load_dataset(experiments.dataset)
+                return self.reply(
+                    200,
+                    {
+                        "cloud_enabled": False,
+                        "agent_limit": 8,
+                        "fixed_limit": 152,
+                        "domains": sorted({r.domain for r in rows}),
+                        "variants": sorted({r.variant for r in rows}),
+                        "splits": {
+                            s: sum(r.split == s for r in rows)
+                            for s in ["train", "calibration", "test", "transfer"]
+                        },
+                    },
+                )
+            if path == "/api/evidence":
+                path = (
+                    Path(__file__).resolve().parents[1] / "evidence/pilot-summary.json"
+                )
+                if not path.is_file():
+                    return self.reply(
+                        503,
+                        {
+                            "error": "Recorded evidence is available in the source checkout"
+                        },
+                    )
+                return self.reply(200, json.loads(path.read_text(encoding="utf-8")))
             if path == "/api/models":
                 from tharun.local_models import LocalOllama
 
@@ -127,6 +158,10 @@ def make_server(port=8765, database="local-data/approvals.sqlite3", dataset=None
                 if not isinstance(payload, dict):
                     raise ValueError("JSON object required")
                 path = urlsplit(self.path).path
+                if path == "/api/review":
+                    from .policy import assess
+
+                    return self.reply(200, assess(payload))
                 if path == "/api/experiments":
                     return self.reply(202, experiments.submit(payload))
                 if path == "/api/seed":

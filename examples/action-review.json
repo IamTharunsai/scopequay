@@ -1,0 +1,19 @@
+{
+  "instruction":"Refund order/1042; quantity 5.",
+  "operation":"refund",
+  "resource":"order/1042",
+  "proposed_resource":"order/1042",
+  "permitted_operations":["refund"],
+  "authority_current":true,
+  "policy_allows":true,
+  "referent_known":true,
+  "approval_required":true,
+  "approval_available":true,
+  "state_current":true,
+  "reversible":true,
+  "evidence_support":0.9,
+  "uncertainty":0.1,
+  "consequence":0.5,
+  "amount":5,
+  "requested_amount":5
+}

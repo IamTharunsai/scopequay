@@ -30,3 +30,5 @@ negative calibration findings. No independent annotations or external adoption.
 ## Product Principles
 Show why an action is held. Require explicit approval where needed. Preserve
 original evidence. Show simulation status and research limits in plain language.
+
+On 13 November the user requested one unified product across the implemented scenarios. The experiment dashboard, advisory skill and CLI/SDK share the engine; they are not separate persona products. The connected lab is now the main workflow.

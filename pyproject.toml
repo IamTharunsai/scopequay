@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "scopequay"
-version = "0.3.0"
+version = "0.4.0a1"
 description = "Experimental risk-calibrated selective autonomy research harness"
 requires-python = ">=3.12"
 license = {text = "Apache-2.0"}
@@ -23,4 +23,4 @@ include = ["tharun*", "scopequay*"]
 
 [tool.setuptools.package-data]
 tharun = ["*.yaml", "*.dw", "*.cedarschema"]
-scopequay = ["web/*.html", "web/*.css", "web/*.js", "web/*.png"]
+scopequay = ["web/*.html", "web/*.css", "web/*.js", "web/*.png", "skill/SKILL.md", "skill/references/*.json"]

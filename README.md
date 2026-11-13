@@ -3,15 +3,15 @@
   <img src="docs/images/logo-light.png" width="480" alt="ScopeQuay">
 </picture>
 
-**Control before action.** A local approval dashboard and research engine for
-risk-calibrated selective autonomy in tool-using LLM agents.
+**Test risky agent actions in a local sandbox.** ScopeQuay v0.4 research alpha
+compares gates, shows committed effects and makes recovery failures inspectable.
 
 ScopeQuay helps inspect a proposed action, choose whether to execute, clarify,
 stage, escalate or refuse, and verify effects after uncertain tool outcomes.
 This is an **experimental single-user sandbox**, not a production authorization
 service. A calibrated autonomy advantage has **not** been established.
 
-![ScopeQuay local approval dashboard](docs/images/approval-dashboard.jpg)
+![ScopeQuay connected experiment workbench](docs/images/workbench-v04.jpg)
 
 ## Run the application
 
@@ -22,15 +22,16 @@ From this repository folder:
 python -m scopequay serve
 ```
 
-Open **http://127.0.0.1:8765**. Load the example requests, select the refund
-requiring approval, add a review note and record approval. After the gate checks
+Open **http://127.0.0.1:8765**. Run a supplied-action comparison, inspect the measured outcomes, or open the
+illustrative approval workflow. After the gate checks
 again, run the action separately in the sandbox. Approval never overrides policy
 or grants missing authority. Clarification confirms the displayed example target;
 state refresh is a simulated check, not a query to a real business system.
 
 The audit and queue survive restart in `local-data/approvals.sqlite3`. These files
-are ignored by Git. The demo invokes no models, sends no real messages, changes
-no customer accounts, and makes no payments. Ctrl+C stops the local server.
+are ignored by Git. The supplied-action and approval demonstrations invoke no model. Explicit agent
+experiments invoke an installed local model. No real messages, account changes or
+payments are made. Ctrl+C stops the local server.
 
 ## Local system versus GitHub
 
@@ -44,11 +45,33 @@ no customer accounts, and makes no payments. Ctrl+C stops the local server.
 See [the deployment guide](docs/LOCAL_AND_GITHUB.md) for details.
 Do not expose the local development HTTP server to the internet.
 
+## Try the shared workflow
+
+1. Choose supplied actions for a no-model test, or a supported installed local LLM.
+2. Select the held-out suite, controllers and recovery policy; run the comparison.
+3. Read safety and useful-completion metrics together, then inspect an individual
+   action, intervention and final effect. Export the result with its provenance.
+
+Full supplied-action evaluation covers 152 held-out points across the implemented
+8 domain vocabularies and 8 variants. It excludes training/calibration data and is
+not a claim of all real-world scenarios. Local-agent tests remain bounded.
+
+For an advisory action review outside the dashboard:
+
+```powershell
+python -m scopequay review --input examples/action-review.json
+python -m scopequay install-skill --target .agents/skills/scopequay-review
+```
+
+The installed skill guides reviews and does not intercept unrelated tool calls,
+authenticate authority or execute the reviewed action. The Python SDK is
+`from scopequay.policy import assess`.
+
 ## Run the research pilot
 
 The local server also exposes bounded experiment jobs through an API. This backend
 can run fixed proposals or an installed local agent and return verified outcomes;
-the approval dashboard has not yet been connected to that experiment API.
+the dashboard is connected to that experiment API.
 See [backend contract](docs/EXPERIMENT_BACKEND.md) and
 [research value and closest-work overlap](docs/RESEARCH_VALUE.md).
 
@@ -117,3 +140,5 @@ Original code is Apache-2.0. Third-party libraries and model licenses remain
 separate. Read [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md).
 No production readiness, safety theorem, independent adoption, publication
 acceptance or commercial demand is claimed.
+
+Read [the competitor/review assessment](competitor-profiles/_summary.md), [release scope](docs/V04_DECISION.md), [launch draft](docs/LAUNCH_PLAN.md), and [research/career evidence](docs/RESEARCH_AND_CAREER.md). Product Hunt has not been submitted and no adoption or award is claimed.

@@ -8,6 +8,7 @@ import secrets
 from urllib.parse import urlsplit
 
 from .workflow import Workflow
+from .experiments import ExperimentService
 
 WEB = Path(__file__).with_name("web")
 STATIC = {
@@ -19,12 +20,16 @@ STATIC = {
 }
 
 
-def make_server(port=8765, database="local-data/approvals.sqlite3"):
+def make_server(port=8765, database="local-data/approvals.sqlite3", dataset=None):
     workflow = Workflow(database)
+    experiments = ExperimentService(
+        Path(database).parent / "experiments",
+        dataset or Path(__file__).resolve().parents[1] / "data/pilot_v0_2.jsonl",
+    )
     token = secrets.token_urlsafe(32)
 
     class Handler(BaseHTTPRequestHandler):
-        server_version = "ScopeQuayLocal/0.2"
+        server_version = "ScopeQuayLocal/0.3"
 
         def reply(self, status, body, content_type="application/json; charset=utf-8"):
             raw = body if isinstance(body, bytes) else json.dumps(body).encode()
@@ -64,6 +69,31 @@ def make_server(port=8765, database="local-data/approvals.sqlite3"):
                         "verification": workflow.verify_events(),
                     },
                 )
+            if path == "/api/experiments":
+                return self.reply(200, {"experiments": experiments.list()})
+            if path == "/api/models":
+                from tharun.local_models import LocalOllama
+
+                try:
+                    return self.reply(
+                        200,
+                        {
+                            "provider": "local_ollama",
+                            "inventory": LocalOllama(timeout=3).inventory(),
+                            "cloud_enabled": False,
+                        },
+                    )
+                except (OSError, ValueError) as exc:
+                    return self.reply(503, {"error": str(exc), "cloud_enabled": False})
+            if path.startswith("/api/experiments/"):
+                parts = path.split("/")
+                try:
+                    if len(parts) == 5 and parts[4] == "results":
+                        return self.reply(200, experiments.results(parts[3]))
+                    if len(parts) == 4:
+                        return self.reply(200, experiments.get(parts[3]))
+                except ValueError as exc:
+                    return self.reply(400, {"error": str(exc)})
             return self.reply(404, {"error": "Not found"})
 
         def do_POST(self):
@@ -97,6 +127,8 @@ def make_server(port=8765, database="local-data/approvals.sqlite3"):
                 if not isinstance(payload, dict):
                     raise ValueError("JSON object required")
                 path = urlsplit(self.path).path
+                if path == "/api/experiments":
+                    return self.reply(202, experiments.submit(payload))
                 if path == "/api/seed":
                     state = workflow.seed()
                 elif path == "/api/action":
@@ -113,27 +145,33 @@ def make_server(port=8765, database="local-data/approvals.sqlite3"):
                 else:
                     return self.reply(404, {"error": "Unknown action endpoint"})
                 return self.reply(200, {**state, "csrf_token": token})
-            except (ValueError, TypeError, UnicodeDecodeError) as exc:
+            except (ValueError, TypeError, UnicodeDecodeError, OSError) as exc:
                 return self.reply(400, {"error": str(exc)})
 
         def log_message(self, fmt, *args):
             # No request body, review note or credentials are logged to terminal.
             pass
 
-    return ThreadingHTTPServer(("127.0.0.1", port), Handler)
+    server = ThreadingHTTPServer(("127.0.0.1", port), Handler)
+    server.experiments = experiments
+    return server
 
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description="ScopeQuay local approval sandbox")
     parser.add_argument("--port", type=int, default=8765)
     parser.add_argument("--database", default="local-data/approvals.sqlite3")
+    parser.add_argument(
+        "--dataset",
+        help="Research fixture path, set by the operator rather than an API client",
+    )
     args = parser.parse_args(argv)
-    with make_server(args.port, args.database) as server:
+    with make_server(args.port, args.database, args.dataset) as server:
         print(
             f"ScopeQuay local demo: http://127.0.0.1:{server.server_port}", flush=True
         )
         print(
-            "Single-user simulation. Ctrl+C stops the server. No model inference or real business actions.",
+            "Single-user sandbox. Explicit agent experiments can invoke installed local models. Cloud APIs and real business actions are disabled.",
             flush=True,
         )
         try:

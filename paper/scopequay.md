@@ -214,6 +214,13 @@ necessary before submission.
 
 ## 9. Next confirmatory study
 
+**Closest-work update, 13 November 2026:** AgentBoundary (arXiv:2609.33658)
+describes four-way permission/risk counterfactuals and a runtime calibration
+module. This directly overlaps the intended contribution. Its abstract was
+verified against the primary page; full-text comparison remains required.
+Calibration and a safety/usefulness trade-off alone must not be claimed as novel.
+See https://arxiv.org/abs/2609.33658 and docs/RESEARCH_VALUE.md.
+
 Freeze independently reviewed scenarios and realistic tool contracts. Adjudicate
 labels before evaluation. Predefine severity and intervention costs. Fit on train
 families, select only on calibration families and keep the final test sealed.

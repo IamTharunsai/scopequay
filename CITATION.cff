@@ -2,8 +2,8 @@ cff-version: 1.2.0
 message: "This is an unreviewed research prototype. Confirm the author list before scholarly citation."
 title: "ScopeQuay: Risk-Calibrated Selective Autonomy for Tool-Using LLM Agents"
 type: software
-version: 0.2.0
-date-released: '2026-11-12'
+version: 0.3.0
+date-released: '2026-11-13'
 license: Apache-2.0
 authors:
   - name: "ScopeQuay Research Project"

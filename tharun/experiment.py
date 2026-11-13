@@ -23,7 +23,7 @@ class RunWriter:
             **manifest,
             "schema_version": 1,
             "run_id": str(uuid.uuid4()),
-            "entry_point": "cli",
+            "entry_point": manifest.get("entry_point", "cli"),
             "created_at": datetime.now(timezone.utc).isoformat(),
             "package_version": __version__,
             "python": platform.python_version(),
@@ -55,7 +55,7 @@ class RunWriter:
         body = {
             **record,
             "run_id": self.manifest["run_id"],
-            "entry_point": "cli",
+            "entry_point": self.manifest["entry_point"],
             "sequence": self.count,
             "previous_hash": self.previous,
         }

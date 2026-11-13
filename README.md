@@ -46,6 +46,12 @@ Do not expose the local development HTTP server to the internet.
 
 ## Run the research pilot
 
+The local server also exposes bounded experiment jobs through an API. This backend
+can run fixed proposals or an installed local agent and return verified outcomes;
+the approval dashboard has not yet been connected to that experiment API.
+See [backend contract](docs/EXPERIMENT_BACKEND.md) and
+[research value and closest-work overlap](docs/RESEARCH_VALUE.md).
+
 ```powershell
 python -m unittest discover -s tests -v
 python scripts/reproduce_pilot.py --out runs/my-new-pilot
